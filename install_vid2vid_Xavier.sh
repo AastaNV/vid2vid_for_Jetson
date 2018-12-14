@@ -49,13 +49,14 @@ for f in "${FILE[@]}"; do
     if ! grep -q "#include <ATen/cuda/CUDAContext.h>" $f ; then
         sed -i '3i#include <ATen/cuda/CUDAContext.h>' $f
     fi
+    sed -i 's/at::globalContext().getCurrentCUDAStream()/at::cuda::getCurrentCUDAStream()/g' $f
 done
 
 
 
 echo "** Build it from source **"
 cd ../
-install.sh
+bash install.sh
 
 
 
